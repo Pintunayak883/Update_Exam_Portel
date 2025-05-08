@@ -66,7 +66,6 @@ const Profile = () => {
       try {
         const token = Cookies.get("token");
         if (!token) {
-          toast.warning("token not found please login first.");
           router.push("/login");
           return;
         }

@@ -126,7 +126,6 @@ export default function EditPage() {
     try {
       const token = Cookies.get("token");
       if (!token) {
-        toast.warning("Please Login again User Not found.");
         router.push("/login");
         setIsSubmitting(false); // Stop loading on error
         return;
@@ -343,7 +342,6 @@ export default function EditPage() {
     const token = Cookies.get("token");
 
     if (!token) {
-      toast.warning("Token not found please login again.");
       router.push("/login");
       setIsSubmitting(false); // Stop loading on error
       return;

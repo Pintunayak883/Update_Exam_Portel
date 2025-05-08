@@ -22,7 +22,7 @@ export default function ClientLayoutShell({
 
   const isAdminRoute = pathname.startsWith("/admin");
 
-  const isPreviewRoute = pathname === "/apply/preview";
+  const isPreviewRoute = pathname === "/user/apply/preview";
 
   const showNavbarFooter = !isAdminRoute && !isPreviewRoute;
 
@@ -41,7 +41,7 @@ export default function ClientLayoutShell({
                 </SidebarTrigger>
                 <h1 className="text-lg font-semibold">Admin Dashboard</h1>
               </header>
-              <main className="flex-1 p-6 max-w-6xl mx-auto w-full">
+              <main className="flex-1 p-6 max-w-6xl mx-auto w-full pt-20">
                 {children}
               </main>
             </div>

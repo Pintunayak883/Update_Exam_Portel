@@ -126,7 +126,6 @@ export default function ApplyPage() {
     try {
       const token = Cookies.get("token");
       if (!token) {
-        toast.warning("Login again User Not found.");
         router.push("/login");
         setIsSubmitting(false); // Stop loading on error
         return;
@@ -343,7 +342,6 @@ export default function ApplyPage() {
     const token = Cookies.get("token");
 
     if (!token) {
-      toast.warning("Token not found please login again.");
       router.push("/login");
       setIsSubmitting(false); // Stop loading on error
       return;
@@ -443,9 +441,7 @@ export default function ApplyPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <p className="text-blue-600">
-          Loading user data, thodi der ruk bhai...
-        </p>
+        <p className="text-blue-600">Loading user data...</p>
       </div>
     );
   }
@@ -474,7 +470,7 @@ export default function ApplyPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="my-5 flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-2xl">
         <h1 className="text-3xl font-bold text-blue-600 mb-6 text-center">
           Apply as System Support Administrator

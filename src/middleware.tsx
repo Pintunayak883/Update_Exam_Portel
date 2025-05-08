@@ -21,7 +21,7 @@ export function middleware(req: NextRequest) {
 
   const { role, status } = getDetailsFromToken(token);
 
-  const publicRoutes = ["/login", "/register", "/about"];
+  const publicRoutes = ["/login", "/register"];
   const protectedRoutes = ["/dashboard", "/profile", "/apply"];
   const candidateOnlyRoutes = ["/apply"];
   const submissionRoutes = ["/edit-submissions", "/submissions"];

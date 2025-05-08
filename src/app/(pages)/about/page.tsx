@@ -11,8 +11,6 @@ export default function AboutPage() {
   // Team members data
   const teamMembers: TeamMember[] = [
     { name: "Pintu Nayak", role: "Full Stack Developer" },
-    { name: "Kirti", role: "HR Manager" },
-    { name: "Aman", role: "Backend Developer" },
   ];
 
   return (
@@ -50,31 +48,6 @@ export default function AboutPage() {
                 </li>
               ))}
             </ul>
-          </div>
-
-          {/* Contact Us */}
-          <div>
-            <h2 className="text-xl font-semibold text-blue-600 mb-2">
-              Contact Us
-            </h2>
-            <p className="text-gray-700">
-              Email:{" "}
-              <a
-                href="mailto:info@examportal.com"
-                className="text-blue-600 hover:underline"
-              >
-                info@examportal.com
-              </a>
-            </p>
-            <p className="text-gray-700">
-              Phone:{" "}
-              <a
-                href="tel:+919664483337"
-                className="text-blue-600 hover:underline"
-              >
-                9664483337
-              </a>
-            </p>
           </div>
         </section>
       </main>

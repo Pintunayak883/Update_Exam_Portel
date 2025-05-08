@@ -72,8 +72,8 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-700 px-4">
-      <div className="w-full max-w-md bg-white/90 backdrop-blur-md rounded-xl shadow-lg p-8">
+    <div className="flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-700 px-4">
+      <div className="my-5 w-full max-w-md bg-white/90 backdrop-blur-md rounded-xl shadow-lg p-8">
         <h1 className="text-3xl font-bold text-center text-indigo-700 mb-6">
           Sign Up for Exam Form Portal
         </h1>

@@ -39,11 +39,15 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="bg-blue-600 text-white shadow-full">
+      <nav className="bg-blue-600 text-white shadow-full sticky z-10  top-0  w-full h-18">
         <div className="container mx-auto px-4 py-3 flex items-center justify-between">
           {/* Humble logo as Home link */}
-          <Link href="/" className="text-xl font-bold">
-            Home
+          <Link href="/" className="flex items-center">
+            <img
+              src="/Artboard 1.jpg"
+              alt="Netparam Logo"
+              className="h-10 w-auto rounded-2xl"
+            />
           </Link>
 
           {/* Humble account dropdown */}

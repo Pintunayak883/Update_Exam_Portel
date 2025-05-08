@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { Twitter, Linkedin, Github } from "lucide-react";
+import { Twitter, Linkedin, Instagram } from "lucide-react";
 
 // Define types for footer links
 interface FooterLink {
@@ -25,15 +25,23 @@ const footerLinks: FooterLink[] = [
 // Candidate links (from Navbar)
 const candidateLinks: FooterLink[] = [
   { name: "Home", href: "/" },
-  { name: "Apply", href: "/apply" },
-  { name: "My Submissions", href: "/submissions" },
+  { name: "Apply", href: "/user/apply" },
+  { name: "My Submissions", href: "/user/submissions" },
 ];
 
 // Social media links data
 const socialLinks: SocialLink[] = [
-  { name: "Twitter", href: "https://twitter.com", icon: Twitter },
-  { name: "LinkedIn", href: "https://linkedin.com", icon: Linkedin },
-  { name: "GitHub", href: "https://github.com", icon: Github },
+  { name: "Twitter", href: "https://twitter.com/NetcomAtcCdac", icon: Twitter },
+  {
+    name: "LinkedIn",
+    href: "https://www.linkedin.com/in/netcom-atc-cdac/",
+    icon: Linkedin,
+  },
+  {
+    name: "Instagram",
+    href: "https://www.instagram.com/netcom_atc_cdac/",
+    icon: Instagram,
+  },
 ];
 
 export default function Footer() {
@@ -41,7 +49,7 @@ export default function Footer() {
   const currentYear: number = new Date().getFullYear();
 
   return (
-    <footer className="bg-blue-800 text-white py-8 footer">
+    <footer className="bg-blue-600 text-white py-8 footer">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Candidate Links Section */}
@@ -109,7 +117,7 @@ export default function Footer() {
           {/* Copyright Section */}
           <div className="flex items-center justify-center md:justify-end">
             <p className="text-sm text-blue-300">
-              © {currentYear} Exam Form Portal. All rights reserved.
+              © {currentYear} Exam Portal. All rights reserved.
             </p>
           </div>
         </div>
@@ -117,7 +125,7 @@ export default function Footer() {
         {/* Divider */}
         <div className="border-t border-blue-700 mt-8 pt-4 text-center">
           <p className="text-xs text-blue-400">
-            Built with ❤️ by [NetParm.pvt.ltd]
+            Built by [Netparm Technologies Pvt.Ltd]
           </p>
         </div>
       </div>

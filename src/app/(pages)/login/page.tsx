@@ -92,8 +92,8 @@ export default function LoginPage() {
   }, [dispatch]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-blue-700 px-4">
-      <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-8">
+    <div className=" flex items-center justify-center bg-gradient-to-r from-blue-500 to-blue-700 px-4  overflow-y-hidden">
+      <div className="bg-white my-5 rounded-2xl shadow-xl w-full max-w-md p-8">
         <h1 className="text-3xl font-bold text-blue-700 text-center mb-6">
           Login to Exam Form Portal
         </h1>

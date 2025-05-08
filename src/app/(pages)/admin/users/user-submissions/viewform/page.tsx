@@ -724,11 +724,10 @@ function ViewPageContent() {
                 </p>
               </div>
               <div className="flex justify-between mt-2">
-                <div className="w-20 h-20 border-2 border-black flex items-center justify-center">
+                {/* <div className="w-20 h-20 border-2 border-black flex items-center justify-center">
                   <p className="text-xs text-center">Revenue Stamp</p>
-                </div>
-                <p>
-                  Signature:{" "}
+                </div> */}
+                <p className="text-center">
                   {formData.signature ? (
                     <img
                       src={formData.signature}
@@ -738,6 +737,7 @@ function ViewPageContent() {
                   ) : (
                     "____________________"
                   )}
+                  Signature:
                 </p>
                 <div className="w-20 h-20 border-2 border-black flex items-center justify-center">
                   {formData.thumbprint ? (
@@ -1026,11 +1026,10 @@ function ViewPageContent() {
                 </p>
               </div>
               <div className="flex justify-between mt-2">
-                <div className="w-20 h-20 border-2 border-black flex items-center justify-center">
+                {/* <div className="w-20 h-20 border-2 border-black flex items-center justify-center">
                   <p className="text-xs text-center">Revenue Stamp</p>
-                </div>
-                <p>
-                  Signature:{" "}
+                </div> */}
+                <p className="text-center">
                   {formData.signature ? (
                     <img
                       src={formData.signature}
@@ -1040,6 +1039,7 @@ function ViewPageContent() {
                   ) : (
                     "____________________"
                   )}
+                  Signature:
                 </p>
                 <div className="w-20 h-20 border-2 border-black flex items-center justify-center">
                   {formData.thumbprint ? (
