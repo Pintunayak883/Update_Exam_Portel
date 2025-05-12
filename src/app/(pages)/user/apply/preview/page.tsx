@@ -911,11 +911,11 @@ export default function PreviewPage() {
                 </li>
                 <li>
                   I hereby responsible for whatever duties will be given on the
-                  centre i.e., CI1, CI2, CI3, CI4 whatever decided on the centre
-                  during examination and if any discrepancy will be occur from
-                  my side for that particular responsibility and eligible for
-                  penalty, I am agreeing to pay the sum of the penalty because
-                  of my irresponsible behaviour.
+                  centre i.e., SSA-1,SSA-2 whatever decided on the centre during
+                  examination and if any discrepancy will be occur from my side
+                  for that particular responsibility and eligible for penalty, I
+                  am agreeing to pay the sum of the penalty because of my
+                  irresponsible behaviour.
                 </li>
                 <li>
                   If I would be found guilty in any Suspicious Activity/
@@ -1213,11 +1213,11 @@ export default function PreviewPage() {
                 </li>
                 <li>
                   I hereby responsible for whatever duties will be given on the
-                  centre i.e., CI1, CI2, CI3, CI4 whatever decided on the centre
-                  during examination and if any discrepancy will be occur from
-                  my side for that particular responsibility and eligible for
-                  penalty, I am agreeing to pay the sum of the penalty because
-                  of my irresponsible behaviour.
+                  centre i.e., SSA-1,SSA-2 whatever decided on the centre during
+                  examination and if any discrepancy will be occur from my side
+                  for that particular responsibility and eligible for penalty, I
+                  am agreeing to pay the sum of the penalty because of my
+                  irresponsible behaviour.
                 </li>
                 <li>
                   If I would be found guilty in any Suspicious Activity/

@@ -68,10 +68,8 @@ export default function Navbar() {
                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem>
-                      {role === "admin" ? (
+                      {role === "admin" && (
                         <Link href="/admin/dashboard">Dashboard</Link>
-                      ) : (
-                        <Link href="/user/profile">Profile</Link>
                       )}
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={handleLogout}>

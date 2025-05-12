@@ -226,8 +226,10 @@ export default function ApplyPage() {
       toast.error("Candidate must be at least 21 years old!");
       return false;
     }
-    if (!formData.phone || !/^\d{10}$/.test(formData.phone)) {
-      toast.error("Phone number must be exactly 10 digits!");
+    if (!formData.phone || !/^[6-9]\d{9}$/.test(formData.phone)) {
+      toast.error(
+        "Phone number must be a valid 10-digit Indian mobile number starting with 6, 7, 8, or 9!"
+      );
       return false;
     }
     if (!formData.area || formData.area.trim().length < 2) {
@@ -517,7 +519,6 @@ export default function ApplyPage() {
                     placeholder="Enter your full name"
                     className="mt-1 border-blue-300 focus:border-blue-500 focus:ring-blue-500"
                     required
-                    disabled
                   />
                 </div>
                 <div>
@@ -533,7 +534,6 @@ export default function ApplyPage() {
                     placeholder="Enter your email"
                     className="mt-1 border-blue-300 focus:border-blue-500 focus:ring-blue-500"
                     required
-                    disabled
                   />
                 </div>
                 <div>
@@ -757,9 +757,8 @@ export default function ApplyPage() {
                           <SelectValue placeholder="Select your role" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="CI-1">CI-1</SelectItem>
-                          <SelectItem value="CI-2">CI-2</SelectItem>
-                          <SelectItem value="CI-3">CI-3</SelectItem>
+                          <SelectItem value="SSA-1">SSA-1</SelectItem>
+                          <SelectItem value="SSA-2">SSA-2</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
