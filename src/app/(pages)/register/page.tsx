@@ -31,6 +31,51 @@ export default function SignupPage() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const router = useRouter();
 
+  // Validation functions add karo
+  const validateName = (name: string): string | null => {
+    if (!name) return "Name is required";
+    if (name.length < 2) return "Name must be at least 2 characters long";
+    if (!/^[a-zA-Z\s]+$/.test(name))
+      return "Name can only contain letters and spaces";
+    if (name.length > 50) return "Name cannot exceed 50 characters";
+    return null;
+  };
+
+  const validateEmail = (email: string): string | null => {
+    if (!email) return "Email is required";
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (/\s/.test(email)) return "Email cannot contain spaces";
+    if (!emailRegex.test(email)) return "Please enter a valid email address";
+    if (email.length > 100) return "Email cannot exceed 100 characters";
+    return null;
+  };
+
+  const validatePassword = (password: string): string | null => {
+    if (!password) return "Password is required";
+    if (password.length < 8)
+      return "Password must be at least 8 characters long";
+    if (password.length > 50) return "Password cannot exceed 50 characters";
+    if (/\s/.test(password)) return "Password cannot contain spaces";
+    if (!/[A-Z]/.test(password))
+      return "Password must contain at least one uppercase letter";
+    if (!/[a-z]/.test(password))
+      return "Password must contain at least one lowercase letter";
+    if (!/[0-9]/.test(password))
+      return "Password must contain at least one number";
+    if (!/[^a-zA-Z0-9]/.test(password))
+      return "Password must contain at least one special character";
+    return null;
+  };
+
+  const validateConfirmPassword = (
+    password: string,
+    confirmPassword: string
+  ): string | null => {
+    if (!confirmPassword) return "Please confirm your password";
+    if (password !== confirmPassword) return "Passwords do not match";
+    return null;
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (name === "name" && /[^a-zA-Z\s]/.test(value)) {
@@ -43,8 +88,31 @@ export default function SignupPage() {
     e.preventDefault();
     setIsLoading(true);
 
-    if (formData.password !== formData.confirmPassword) {
-      toast.error("Passwords do not match!");
+    const nameError = validateName(formData.name);
+    const emailError = validateEmail(formData.email);
+    const passwordError = validatePassword(formData.password);
+    const confirmPasswordError = validateConfirmPassword(
+      formData.password,
+      formData.confirmPassword
+    );
+
+    if (nameError) {
+      toast.error(nameError);
+      setIsLoading(false);
+      return;
+    }
+    if (emailError) {
+      toast.error(emailError);
+      setIsLoading(false);
+      return;
+    }
+    if (passwordError) {
+      toast.error(passwordError);
+      setIsLoading(false);
+      return;
+    }
+    if (confirmPasswordError) {
+      toast.error(confirmPasswordError);
       setIsLoading(false);
       return;
     }

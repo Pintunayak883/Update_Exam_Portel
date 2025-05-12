@@ -371,6 +371,24 @@ export default function ApplyPage() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
+    const textOnlyFields = [
+      "accountHolderName",
+      "sonOf",
+      "resident",
+      "name",
+      "area",
+      "bankName",
+      "branch",
+    ];
+    if (textOnlyFields.includes(name)) {
+      const textOnlyValue = value.replace(/[^a-zA-Z\s]/g, ""); // Sirf letters aur spaces allow
+      setFormData((prev) => ({ ...prev, [name]: textOnlyValue }));
+      if (value !== textOnlyValue) {
+        toast.error(`Only letters and spaces are allowed in ${name}!`);
+      }
+      return;
+    }
+
     if (name === "aadhaarNo") {
       const numericValue = value.replace(/\D/g, "");
       if (numericValue.length <= 12) {
@@ -499,6 +517,7 @@ export default function ApplyPage() {
                     placeholder="Enter your full name"
                     className="mt-1 border-blue-300 focus:border-blue-500 focus:ring-blue-500"
                     required
+                    disabled
                   />
                 </div>
                 <div>
@@ -514,6 +533,7 @@ export default function ApplyPage() {
                     placeholder="Enter your email"
                     className="mt-1 border-blue-300 focus:border-blue-500 focus:ring-blue-500"
                     required
+                    disabled
                   />
                 </div>
                 <div>
@@ -883,6 +903,7 @@ export default function ApplyPage() {
                 <div className="space-y-4">
                   <div className="flex items-center space-x-2">
                     <Checkbox
+                      className="border border-black"
                       id="penaltyClauseAgreement"
                       checked={formData.penaltyClauseAgreement}
                       onCheckedChange={(checked) =>
@@ -904,54 +925,7 @@ export default function ApplyPage() {
             )}
           </div>
 
-          {/* Section 2: Undertaking */}
-          {/* <div className="border-b border-gray-300">
-            <h2
-              className="text-2xl font-semibold text-blue-600 mb-4 cursor-pointer"
-              onClick={() => toggleSection("Undertaking")}
-            >
-              Undertaking {openSection === "Undertaking" ? "▲" : "▼"}
-            </h2>
-            {openSection === "Undertaking" && (
-              <div className="space-y-4">
-                <div>
-                  <Label htmlFor="aadhaarNo" className="text-blue-600">
-                    Aadhaar No.
-                  </Label>
-                  <Input
-                    id="aadhaarNo"
-                    name="aadhaarNo"
-                    type="text"
-                    value={formData.aadhaarNo}
-                    onChange={handleChange}
-                    placeholder="Enter your 12-digit Aadhaar number"
-                    className="mt-1 border-blue-300 focus:border-blue-500 focus:ring-blue-500"
-                    required
-                  />
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="penaltyClauseAgreement"
-                    checked={formData.penaltyClauseAgreement}
-                    onCheckedChange={(checked) =>
-                      handleCheckboxChange(
-                        "penaltyClauseAgreement",
-                        checked as boolean
-                      )
-                    }
-                  />
-                  <Label
-                    htmlFor="penaltyClauseAgreement"
-                    className="text-blue-600"
-                  >
-                    I agree to the penalty clauses and undertaking terms.
-                  </Label>
-                </div>
-              </div>
-            )}
-          </div> */}
-
-          {/* Section 3: Self-Declaration – COVID-19 */}
+          {/* Section 2: Self-Declaration – COVID-19 */}
           <div className="border-b border-gray-300">
             <h2
               className="text-2xl font-semibold text-blue-600 mb-4 cursor-pointer"
@@ -1128,6 +1102,7 @@ export default function ApplyPage() {
                 </div>
                 <div className="flex items-center space-x-2 mt-4">
                   <Checkbox
+                    className="border border-black"
                     id="covidDeclarationAgreement"
                     checked={formData.covidDeclarationAgreement}
                     onCheckedChange={(checked) =>

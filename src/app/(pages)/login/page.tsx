@@ -31,6 +31,26 @@ export default function LoginPage() {
   const router = useRouter();
   const dispatch = useDispatch();
 
+  // Validation functions add karo
+  const validateEmail = (email: string): string | null => {
+    if (!email) return "Email is required";
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (/\s/.test(email)) return "Email cannot contain spaces";
+    if (!emailRegex.test(email.trim()))
+      return "Please enter a valid email address";
+    if (email.length > 100) return "Email cannot exceed 100 characters";
+    return null;
+  };
+
+  // const validatePassword = (password: string): string | null => {
+  //   if (!password) return "Password is required";
+  //   if (password.length < 8)
+  //     return "Password must be at least 8 characters long";
+  //   if (password.length > 50) return "Password cannot exceed 50 characters";
+  //   if (/\s/.test(password)) return "Password cannot contain spaces";
+  //   return null;
+  // };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -39,6 +59,19 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    const emailError = validateEmail(formData.email);
+    // const passwordError = validatePassword(formData.password);
+
+    if (emailError) {
+      toast.error(emailError);
+      setIsLoading(false);
+      return;
+    }
+    // if (passwordError) {
+    //   toast.error(passwordError);
+    //   setIsLoading(false);
+    //   return;
+    // }
 
     try {
       const response = await axios.post("/api/auth/login", formData, {
@@ -112,6 +145,7 @@ export default function LoginPage() {
               placeholder="Enter your email"
               className="border-blue-400 focus:border-blue-600 focus:ring-blue-600"
               required
+              maxLength={100}
             />
           </div>
 
@@ -130,6 +164,7 @@ export default function LoginPage() {
                 placeholder="Enter your password"
                 className="border-blue-400 focus:border-blue-600 focus:ring-blue-600 pr-10"
                 required
+                maxLength={50}
               />
               <button
                 type="button"

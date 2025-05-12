@@ -10,6 +10,7 @@ import html2canvas from "html2canvas";
 import Cookies from "js-cookie";
 import ClipLoader from "react-spinners/ClipLoader";
 import { toast } from "sonner";
+import Checkbox from "@/components/Checkbox";
 
 interface ApplyFormData {
   name: string;
@@ -152,13 +153,13 @@ export default function PreviewPage() {
       const pdf = new jsPDF({
         orientation: "portrait",
         unit: "mm",
-        format: "legal",
+        format: "A4",
       });
 
       const sections = pdfRef.current.querySelectorAll(".preview-section");
-      const pageWidth = 215.9;
-      const pageHeight = 355.6;
-      const margin = 10;
+      const pageWidth = 210;
+      const pageHeight = 297;
+      const margin = 6;
       const contentWidth = pageWidth - 2 * margin;
       let currentY = margin;
 
@@ -203,7 +204,7 @@ export default function PreviewPage() {
         document.body.removeChild(clonedSection); // clean up
       }
 
-      pdf.save("application-preview.pdf");
+      pdf.save(`${formData?.name}-form.pdf`);
     } catch (error) {
       console.error("Error generating PDF:", error);
       toast.error("PDF banate waqt kuch phat gaya, try again bro!");
@@ -315,21 +316,34 @@ export default function PreviewPage() {
               I, <strong>{formData.name || "__________"}</strong> S/O{" "}
               <strong>{formData.sonOf || "__________"}</strong> hereby declare
               that I am not appearing in the{" "}
-              <strong>{examData.examName || "__________"}</strong> Examination,{" "}
-              <strong>
+              <strong className="underline">
+                {examData.examName || "__________"}
+              </strong>{" "}
+              Examination,{" "}
+              <strong className="underline">
                 {examData.examCount
                   ? examData.examCount.toString().padStart(2, "0")
                   : "___"}
               </strong>
-              /<strong>{examData.heldDate || "__________"}</strong>, held from{" "}
-              <strong>{formatDate(examData.startDate)}</strong> to{" "}
-              <strong>{formatDate(examData.endDate)}</strong> as a candidate
-              either at the exam centre or have been deputed at any other centre
-              which is involved in the conduct of the exam. If I am absent or
-              leave the examination Centre at any time, in any scenario on the
-              above mentioned dates, or found doing any Suspicious Activity /
-              Malpractice / Unethical Behavior / Professional Misconduct, then
-              NetParam Technologies Pvt Ltd / NETCOM/C-DAC/
+              /
+              <strong className="underline">
+                {examData.heldDate || "__________"}
+              </strong>
+              , held from{" "}
+              <strong className="underline">
+                {formatDate(examData.startDate)}
+              </strong>{" "}
+              to{" "}
+              <strong className="underline">
+                {formatDate(examData.endDate)}
+              </strong>{" "}
+              as a candidate either at the exam centre or have been deputed at
+              any other centre which is involved in the conduct of the exam. If
+              I am absent or leave the examination Centre at any time, in any
+              scenario on the above mentioned dates, or found doing any
+              Suspicious Activity / Malpractice / Unethical Behavior /
+              Professional Misconduct, then NetParam Technologies Pvt Ltd /
+              NETCOM/C-DAC/
               {examData.examName || "__________"} has full authority to take any
               disciplinary action (regarding Duty Code of Conduct, as specified
               in IPC Section).
@@ -391,23 +405,22 @@ export default function PreviewPage() {
                 <p>
                   Date: <strong>{formData.currentDate || "__________"}</strong>
                 </p>
-                <p>
-                  Signature:{" "}
-                  {formData.signature ? (
+                <p>Signature: </p>{" "}
+                {formData.signature ? (
+                  <div className="w-24 h-auto border-2 border-black mt-2">
                     <img
                       src={formData.signature}
                       alt="Signature"
-                      className="w-32 h-12 object-contain"
+                      className="object-contain"
                     />
-                  ) : (
-                    "____________________"
-                  )}
-                </p>
+                  </div>
+                ) : (
+                  "____________________"
+                )}
               </div>
               <div className="flex flex-col items-center">
-                <p className="mb-2">Passport Size Photo</p>
                 {formData.photo ? (
-                  <div className="w-24 h-32 border-2 border-black mb-4">
+                  <div className="w-[150px] h-[150px] border-2 border-black mb-4">
                     <img
                       src={formData.photo}
                       alt="Photo"
@@ -419,7 +432,7 @@ export default function PreviewPage() {
                 )}
                 <p>Thumb Impression</p>
                 {formData.thumbprint ? (
-                  <div className="w-24 h-16 border-2 border-black mt-2">
+                  <div className="w-36 h-16 border-2 border-black mt-2">
                     <img
                       src={formData.thumbprint}
                       alt="Thumbprint"
@@ -427,7 +440,7 @@ export default function PreviewPage() {
                     />
                   </div>
                 ) : (
-                  <div className="w-24 h-16 border-2 border-black mt-2"></div>
+                  <div className="w-24 h-16 border-2 border-black "></div>
                 )}
               </div>
             </div>
@@ -463,8 +476,8 @@ export default function PreviewPage() {
           </div>
 
           {/* Humble Self-Declaration - COVID-19 Section */}
-          <div className="preview-section">
-            <div className="flex justify-center mb-4">
+          <div className="preview-section ">
+            <div className="flex justify-center">
               <img
                 src="/starparth-logo.png"
                 alt="StarParth Logo"
@@ -474,136 +487,415 @@ export default function PreviewPage() {
                 crossOrigin="anonymous"
               />
             </div>
-            <div className="text-center mb-4">
-              <p className="text-xl font-bold">
-                STARPARTH TECHNOLOGIES PVT LTD
-              </p>
-              <p className="text-sm">
+            <div className="text-center">
+              <p className="text-[11px] underline">
                 <strong>{examData.examName || "__________"}</strong>{" "}
+                <strong>
+                  {examData.examCount
+                    ? examData.examCount.toString().padStart(2, "0")
+                    : "___"}
+                  /
+                  <strong>
+                    {examData.heldDate
+                      ? new Date(examData.heldDate).getFullYear()
+                      : "__________"}
+                  </strong>
+                  (
+                </strong>
                 <strong>{formatDate(examData.startDate)}</strong> to{" "}
-                <strong>{formatDate(examData.endDate)}</strong>{" "}
+                <strong>{formatDate(examData.endDate)}</strong> )
                 {/* Updated exam name and dates */}
               </p>
-              <p className="text-sm font-bold">Self-Declaration - COVID-19</p>
+              <p className="text-[11px] font-bold">
+                Self-Declaration - COVID-19
+              </p>
             </div>
-            <div className="text-sm">
-              <p>
-                Name: <strong>{formData.name || "__________"}</strong>
-              </p>
-              <p>
-                Id Proof: <strong>{formData.aadhaarNo || "__________"}</strong>
-              </p>
+            <div className="text-[11px]">
+              <div className="flex justify-start gap-56">
+                {" "}
+                <p>
+                  Name:{" "}
+                  <strong className="underline">
+                    {formData.name || "__________"}
+                  </strong>
+                </p>
+                <p>
+                  Id Proof:{" "}
+                  <strong className="underline">
+                    {formData.aadhaarNo || "__________"}
+                  </strong>
+                </p>
+              </div>
               <p>Centre Code: __________ Centre Name: __________</p>
               <p>City: __________ ATC's / C-DAC Centre's Name: __________</p>
-              <p className="font-bold mt-4">
+              <p className="font-bold ">
                 1. Do you have any of the following flu-like symptoms:
               </p>
-              <ul className="list-none pl-4 mb-4">
-                <li>
-                  a. Fever (38 degree or higher):{" "}
-                  <strong>{formData.fever || "__________"}</strong>
+              <ul className="list-none pl-4">
+                {/* a. Fever */}
+                <li className="flex items-center space-x-4">
+                  <span className="w-60">a. Fever</span>
+                  {formData.fever?.toLowerCase() === "yes" ? (
+                    <Checkbox text={"Yes"} isChecked={true} />
+                  ) : (
+                    <Checkbox text={"Yes"} isChecked={false} />
+                  )}
+                  {formData.fever?.toLowerCase() === "no" ? (
+                    <Checkbox text={"No"} isChecked={true} />
+                  ) : (
+                    <Checkbox text={"No"} isChecked={false} />
+                  )}
                 </li>
-                <li>
-                  b. Cough: <strong>{formData.cough || "__________"}</strong>
+
+                {/* b. Cough */}
+                <li className="flex items-center space-x-4">
+                  <span className="w-60">b. Cough</span>
+                  {formData.cough?.toLowerCase() === "yes" ? (
+                    <Checkbox text={"Yes"} isChecked={true} />
+                  ) : (
+                    <Checkbox text={"Yes"} isChecked={false} />
+                  )}
+                  {formData.cough?.toLowerCase() === "no" ? (
+                    <Checkbox text={"No"} isChecked={true} />
+                  ) : (
+                    <Checkbox text={"No"} isChecked={false} />
+                  )}
                 </li>
-                <li>
-                  c. Breathlessness:{" "}
-                  <strong>{formData.breathlessness || "__________"}</strong>
+
+                {/* c. Breathlessness */}
+                <li className="flex items-center space-x-4">
+                  <span className="w-60">c. Breathlessness</span>
+                  {formData.breathlessness?.toLowerCase() === "yes" ? (
+                    <Checkbox text={"Yes"} isChecked={true} />
+                  ) : (
+                    <Checkbox text={"Yes"} isChecked={false} />
+                  )}
+                  {formData.breathlessness?.toLowerCase() === "no" ? (
+                    <Checkbox text={"No"} isChecked={true} />
+                  ) : (
+                    <Checkbox text={"No"} isChecked={false} />
+                  )}
                 </li>
-                <li>
-                  d. Sore Throat:{" "}
-                  <strong>{formData.soreThroat || "__________"}</strong>
+
+                {/* d. Sore Throat */}
+                <li className="flex items-center space-x-4">
+                  <span className="w-60">d. Sore Throat</span>
+                  {formData.soreThroat?.toLowerCase() === "yes" ? (
+                    <Checkbox text={"Yes"} isChecked={true} />
+                  ) : (
+                    <Checkbox text={"Yes"} isChecked={false} />
+                  )}
+                  {formData.soreThroat?.toLowerCase() === "no" ? (
+                    <Checkbox text={"No"} isChecked={true} />
+                  ) : (
+                    <Checkbox text={"No"} isChecked={false} />
+                  )}
                 </li>
-                <li>
-                  e. Others:{" "}
-                  <strong>
-                    {formData.otherSymptomsDetails || "__________"}
-                  </strong>
+
+                {/* e. Others */}
+                <li className="flex items-center space-x-4">
+                  <span className="w-60">e. Others: Please specify</span>
+                  {formData.otherSymptoms?.toLowerCase() === "yes" ? (
+                    <Checkbox text={"Yes"} isChecked={true} />
+                  ) : (
+                    <Checkbox text={"Yes"} isChecked={false} />
+                  )}
+                  {formData.otherSymptoms?.toLowerCase() === "no" ? (
+                    <Checkbox text={"No"} isChecked={true} />
+                  ) : (
+                    <Checkbox text={"No"} isChecked={false} />
+                  )}
                 </li>
               </ul>
+
+              {/* Question 2 - Close Contact */}
               <p className="font-bold">
                 2. Have you or an immediate family member come in close contact
                 with a confirmed case of the coronavirus in the last 14 days?
-                ("Close contact" means being at a distance of less than one
-                meter for more than 15 minutes.)
+                <br />
+                <span className="font-normal text-[11px]">
+                  ("Close contact" means being at a distance of less than one
+                  meter for more than 15 minutes.)
+                </span>
               </p>
-              <p>
-                <strong>{formData.closeContact || "__________"}</strong>
-              </p>
-              <p className="mt-4">
+              <div className="flex space-x-6">
+                {formData.closeContact?.toLowerCase() === "yes" ? (
+                  <Checkbox text={"Yes"} isChecked={true} />
+                ) : (
+                  <Checkbox text={"Yes"} isChecked={false} />
+                )}
+                {formData.closeContact?.toLowerCase() === "no" ? (
+                  <Checkbox text={"No"} isChecked={true} />
+                ) : (
+                  <Checkbox text={"No"} isChecked={false} />
+                )}
+              </div>
+
+              <p className="">
                 I hereby declare that all the information mentioned above is
                 true to the best of my knowledge and will immediately inform to
                 Covid -19 Central/State Govt. authority, if any symptoms arise
                 during or after examination.
               </p>
-              <div className="flex justify-between mt-4">
+              <div className="">
+                {/* Signature, Date, Place ek hi line mein, Signature image ke saath */}
+                <div className="flex flex-wrap justify-between items-center gap-4">
+                  {/* Signature image aur text ek line mein */}
+                  <div className="flex items-center gap-2">
+                    <p>Signature:</p>
+                    {formData.signature ? (
+                      <div className="w-24 h-12">
+                        <img
+                          src={formData.signature}
+                          alt="Signature"
+                          className="object-contain"
+                        />
+                      </div>
+                    ) : (
+                      <span>____________________</span>
+                    )}
+                  </div>
+
+                  {/* Date */}
+                  <p>
+                    Date:{" "}
+                    <strong>{formData.currentDate || "__________"}</strong>
+                  </p>
+
+                  {/* Place */}
+                  <p>
+                    Place: <strong>{formData.resident || "__________"}</strong>
+                  </p>
+                </div>
+
+                {/* Neeche ek sidhi line */}
+                <hr className="border-t-2 border-black mt-2 " />
+              </div>
+            </div>
+            <div className="text-center ">
+              <p className="text-[11px] underline">
+                <strong>{examData.examName || "__________"}</strong>{" "}
+                <strong>
+                  {examData.examCount
+                    ? examData.examCount.toString().padStart(2, "0")
+                    : "___"}
+                  /
+                  <strong>
+                    {examData.heldDate
+                      ? new Date(examData.heldDate).getFullYear()
+                      : "__________"}
+                  </strong>
+                  (
+                </strong>
+                <strong>{formatDate(examData.startDate)}</strong> to{" "}
+                <strong>{formatDate(examData.endDate)}</strong> )
+                {/* Updated exam name and dates */}
+              </p>
+              <p className="text-sm font-bold">Self-Declaration - COVID-19</p>
+            </div>
+            <div className="text-[11px]">
+              <div className="flex justify-start gap-56">
+                {" "}
                 <p>
-                  Signature:{" "}
-                  {formData.signature ? (
-                    <img
-                      src={formData.signature}
-                      alt="Signature"
-                      className="w-32 h-12 object-contain"
-                    />
+                  Name:{" "}
+                  <strong className="underline">
+                    {formData.name || "__________"}
+                  </strong>
+                </p>
+                <p>
+                  Id Proof:{" "}
+                  <strong className="underline">
+                    {formData.aadhaarNo || "__________"}
+                  </strong>
+                </p>
+              </div>
+              <p>Centre Code: __________ Centre Name: __________</p>
+              <p>City: __________ ATC's / C-DAC Centre's Name: __________</p>
+              <p className="font-bold ">
+                1. Do you have any of the following flu-like symptoms:
+              </p>
+              <ul className="list-none pl-4">
+                {/* a. Fever */}
+                <li className="flex items-center space-x-4">
+                  <span className="w-60">a. Fever</span>
+                  {formData.fever?.toLowerCase() === "yes" ? (
+                    <Checkbox text={"Yes"} isChecked={true} />
                   ) : (
-                    "____________________"
+                    <Checkbox text={"Yes"} isChecked={false} />
                   )}
-                </p>
-                <p>
-                  Date: <strong>{formData.currentDate || "__________"}</strong>
-                </p>
-                <p>
-                  Place: <strong>{formData.resident || "__________"}</strong>
-                </p>
+                  {formData.fever?.toLowerCase() === "no" ? (
+                    <Checkbox text={"No"} isChecked={true} />
+                  ) : (
+                    <Checkbox text={"No"} isChecked={false} />
+                  )}
+                </li>
+
+                {/* b. Cough */}
+                <li className="flex items-center space-x-4">
+                  <span className="w-60">b. Cough</span>
+                  {formData.cough?.toLowerCase() === "yes" ? (
+                    <Checkbox text={"Yes"} isChecked={true} />
+                  ) : (
+                    <Checkbox text={"Yes"} isChecked={false} />
+                  )}
+                  {formData.cough?.toLowerCase() === "no" ? (
+                    <Checkbox text={"No"} isChecked={true} />
+                  ) : (
+                    <Checkbox text={"No"} isChecked={false} />
+                  )}
+                </li>
+
+                {/* c. Breathlessness */}
+                <li className="flex items-center space-x-4">
+                  <span className="w-60">c. Breathlessness</span>
+                  {formData.breathlessness?.toLowerCase() === "yes" ? (
+                    <Checkbox text={"Yes"} isChecked={true} />
+                  ) : (
+                    <Checkbox text={"Yes"} isChecked={false} />
+                  )}
+                  {formData.breathlessness?.toLowerCase() === "no" ? (
+                    <Checkbox text={"No"} isChecked={true} />
+                  ) : (
+                    <Checkbox text={"No"} isChecked={false} />
+                  )}
+                </li>
+
+                {/* d. Sore Throat */}
+                <li className="flex items-center space-x-4">
+                  <span className="w-60">d. Sore Throat</span>
+                  {formData.soreThroat?.toLowerCase() === "yes" ? (
+                    <Checkbox text={"Yes"} isChecked={true} />
+                  ) : (
+                    <Checkbox text={"Yes"} isChecked={false} />
+                  )}
+                  {formData.soreThroat?.toLowerCase() === "no" ? (
+                    <Checkbox text={"No"} isChecked={true} />
+                  ) : (
+                    <Checkbox text={"No"} isChecked={false} />
+                  )}
+                </li>
+
+                {/* e. Others */}
+                <li className="flex items-center space-x-4">
+                  <span className="w-60">e. Others: Please specify</span>
+                  {formData.otherSymptoms?.toLowerCase() === "yes" ? (
+                    <Checkbox text={"Yes"} isChecked={true} />
+                  ) : (
+                    <Checkbox text={"Yes"} isChecked={false} />
+                  )}
+                  {formData.otherSymptoms?.toLowerCase() === "no" ? (
+                    <Checkbox text={"No"} isChecked={true} />
+                  ) : (
+                    <Checkbox text={"No"} isChecked={false} />
+                  )}
+                </li>
+              </ul>
+
+              {/* Question 2 - Close Contact */}
+              <p className="font-bold">
+                2. Have you or an immediate family member come in close contact
+                with a confirmed case of the coronavirus in the last 14 days?
+                <br />
+                <span className="font-normal text-[11px]">
+                  ("Close contact" means being at a distance of less than one
+                  meter for more than 15 minutes.)
+                </span>
+              </p>
+              <div className="flex space-x-6">
+                {formData.closeContact?.toLowerCase() === "yes" ? (
+                  <Checkbox text={"Yes"} isChecked={true} />
+                ) : (
+                  <Checkbox text={"Yes"} isChecked={false} />
+                )}
+                {formData.closeContact?.toLowerCase() === "no" ? (
+                  <Checkbox text={"No"} isChecked={true} />
+                ) : (
+                  <Checkbox text={"No"} isChecked={false} />
+                )}
+              </div>
+
+              <p className="">
+                I hereby declare that all the information mentioned above is
+                true to the best of my knowledge and will immediately inform to
+                Covid -19 Central/State Govt. authority, if any symptoms arise
+                during or after examination.
+              </p>
+              <div className="">
+                {/* Signature, Date, Place ek hi line mein, Signature image ke saath */}
+                <div className="flex flex-wrap justify-between items-center gap-4">
+                  {/* Signature image aur text ek line mein */}
+                  <div className="flex items-center justify-center gap-2 mt-2">
+                    <p>Signature:</p>
+                    {formData.signature ? (
+                      <div className="w-24 h-12">
+                        <img
+                          src={formData.signature}
+                          alt="Signature"
+                          className="object-contain h-full"
+                        />
+                      </div>
+                    ) : (
+                      <span>____________________</span>
+                    )}
+                  </div>
+
+                  {/* Date */}
+                  <p>
+                    Date:{" "}
+                    <strong>{formData.currentDate || "__________"}</strong>
+                  </p>
+
+                  {/* Place */}
+                  <p>
+                    Place: <strong>{formData.resident || "__________"}</strong>
+                  </p>
+                </div>
+
+                {/* Neeche ek sidhi line */}
+                <hr className="border-t-2 border-black mt-2" />
               </div>
             </div>
           </div>
 
           {/* Humble Undertaking Section (StarParth) */}
           <div className="preview-section">
-            <div className="flex justify-center mb-4">
-              <img
-                src="/starparth-logo.png"
-                alt="StarParth Logo"
-                width={200}
-                height={200}
-                className="object-contain"
-                crossOrigin="anonymous"
-              />
-            </div>
             <div className="text-center mb-4">
-              <p className="text-xl font-bold">
-                STARPARTH TECHNOLOGIES PVT LTD
-              </p>
-              <p className="text-sm">
-                <strong>{examData.examName || "__________"}</strong>{" "}
-                <strong>{formatDate(examData.startDate)}</strong> to{" "}
-                <strong>{formatDate(examData.endDate)}</strong>{" "}
-                {/* Updated exam name and dates */}
-              </p>
-              <p className="text-lg font-bold underline">Undertaking</p>
+              <p className="text-[36px] font-bold underline">Undertaking</p>
             </div>
-            <div className="text-sm">
+            <div className="text-[16px] mt-15 ">
               <p>
                 I <strong>{formData.name || "__________"}</strong> S/O{" "}
                 <strong>{formData.sonOf || "__________"}</strong> Resident of{" "}
                 <strong>{formData.resident || "__________"}</strong> Aadhaar No.{" "}
                 <strong>{formData.aadhaarNo || "__________"}</strong> is working
-                for the <strong>{examData.examName || "__________"}</strong>{" "}
+                for the{" "}
+                <strong className="underline">
+                  {examData.examName || "__________"}
+                </strong>{" "}
                 Examination held from{" "}
-                <strong>{formatDate(examData.startDate)}</strong> to{" "}
-                <strong>{formatDate(examData.endDate)}</strong>{" "}
+                <strong className="underline">
+                  {formatDate(examData.startDate)}
+                </strong>{" "}
+                to{" "}
+                <strong className="underline">
+                  {formatDate(examData.endDate)}
+                </strong>{" "}
                 {/* Updated exam name and dates */}
               </p>
-              <p className="mt-2">
+              <p className="pt-2">
                 I will be there at from
-                <strong>{formatDate(examData.startDate)}</strong> to{" "}
-                <strong>{formatDate(examData.endDate)}</strong> and this is
-                final confirmation, and I will not refuse in any condition.{" "}
-                {/* Updated dates */}
+                <strong className="underline">
+                  {formatDate(examData.startDate)}
+                </strong>{" "}
+                to{" "}
+                <strong className="underline">
+                  {formatDate(examData.endDate)}
+                </strong>{" "}
+                and this is final confirmation, and I will not refuse in any
+                condition. {/* Updated dates */}
               </p>
               <p className="font-bold mt-4">Penalty Clause:</p>
-              <ol className="list-decimal list-inside mb-4 pl-4">
+              <ol className="list-decimal list-inside mb-4 pl-4 my-5">
                 <li>
                   I hereby take a responsibility of all the hardware items
                   provided to me for conduction of smooth examination will
@@ -661,60 +953,77 @@ export default function PreviewPage() {
                   Mobile No: <strong>{formData.phone || "__________"}</strong>
                 </p>
               </div>
+              <hr className="border-t-2 border-black mt-2" />
               <div className="flex justify-between mt-2">
-                {/* <div className="w-20 h-20 border-2 border-black flex items-center justify-center">
-                  <p className="text-xs text-center">Revenue Stamp</p>
-                </div> */}
                 <p className="text-center">
                   {formData.signature ? (
-                    <img
-                      src={formData.signature}
-                      alt="Signature"
-                      className="w-32 h-12 object-contain"
-                    />
+                    <div className="w-24 h-auto  mt-2">
+                      <img
+                        src={formData.signature}
+                        alt="Signature"
+                        className=" object-contain"
+                      />
+                    </div>
                   ) : (
                     "____________________"
                   )}
                   Signature:
                 </p>
-                <div className="w-20 h-20 border-2 border-black flex items-center justify-center">
-                  {formData.thumbprint ? (
-                    <img
-                      src={formData.thumbprint}
-                      alt="Thumbprint"
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <p className="text-xs text-center">Thumb</p>
-                  )}
+                <div className="w-20 h-20  flex items-center justify-center">
+                  <p className=" text-center">
+                    {formData.thumbprint ? (
+                      <div className="w-24 h-auto  mt-2">
+                        <img
+                          src={formData.thumbprint}
+                          alt="Thumbprint"
+                          className="object-contain"
+                        />
+                      </div>
+                    ) : (
+                      "____________________"
+                    )}
+                    Thumb:
+                  </p>
                 </div>
               </div>
             </div>
           </div>
-
           {/* Humble Payout Section (StarParth) */}
-          <div className="preview-section">
-            <div className="text-center mb-4">
-              <p className="text-lg font-bold underline">Payout</p>
+          <div className="preview-section ">
+            <div className="text-center ">
+              <p className="text-[36px] font-bold underline">Payout</p>
             </div>
-            <div className="text-sm">
+            <div className="text-[16px]">
               <p>
                 I <strong>{formData.name || "__________"}</strong> S/O{" "}
                 <strong>{formData.sonOf || "__________"}</strong> Resident of{" "}
                 <strong>{formData.resident || "__________"}</strong> Aadhaar No.{" "}
                 <strong>{formData.aadhaarNo || "__________"}</strong> is working
-                for the <strong>{examData.examName || "__________"}</strong>{" "}
+                for the{" "}
+                <strong className="underline">
+                  {examData.examName || "__________"}
+                </strong>{" "}
                 Examination held from
-                <strong>{formatDate(examData.startDate)}</strong> to{" "}
-                <strong>{formatDate(examData.endDate)}</strong>{" "}
+                <strong className="underline">
+                  {formatDate(examData.startDate)}
+                </strong>{" "}
+                to{" "}
+                <strong className="underline">
+                  {formatDate(examData.endDate)}
+                </strong>{" "}
                 {/* Updated exam name and dates */}
               </p>
               <p className="mt-2">
                 I will be there at from{" "}
-                <strong>{formatDate(examData.startDate)}</strong> to{" "}
-                <strong>{formatDate(examData.endDate)}</strong> and this is
-                final confirmation, and I will not refuse in any condition.{" "}
-                {/* Updated dates */}
+                <strong className="underline">
+                  {formatDate(examData.startDate)}
+                </strong>{" "}
+                to{" "}
+                <strong className="underline">
+                  {formatDate(examData.endDate)}
+                </strong>{" "}
+                and this is final confirmation, and I will not refuse in any
+                condition. {/* Updated dates */}
               </p>
               <p className="mt-2">
                 I will be agreeing to work as a Chief Invigilator on behalf of
@@ -724,7 +1033,7 @@ export default function PreviewPage() {
                 on that particular centre.
               </p>
               <p className="font-bold mt-4">My Bank Details are as under:</p>
-              <div className="pl-4 mb-4">
+              <div className=" mb-4">
                 <p>
                   Account Holder Name:{" "}
                   <strong>{formData.accountHolderName || "__________"}</strong>
@@ -752,126 +1061,143 @@ export default function PreviewPage() {
                 whatever applicable from StarParth Technologies Pvt Ltd in your
                 above-mentioned account through IMPS/NEFT or through CASH.
               </p>
-              <div className="flex justify-between mt-4">
-                <p>
-                  Signature:{" "}
+              <div className="flex flex-wrap justify-between items-center gap-4 mt-5">
+                {/* Signature image aur text ek line mein */}
+                <div className="flex items-center gap-2">
+                  <p>Signature:</p>
                   {formData.signature ? (
-                    <img
-                      src={formData.signature}
-                      alt="Signature"
-                      className="w-32 h-12 object-contain"
-                    />
+                    <div className="w-24 h-12">
+                      <img
+                        src={formData.signature}
+                        alt="Signature"
+                        className="object-contain "
+                      />
+                    </div>
                   ) : (
-                    "____________________"
+                    <span>____________________</span>
                   )}
-                </p>
+                </div>
+
+                {/* Date */}
                 <p>
                   Date: <strong>{formData.currentDate || "__________"}</strong>
                 </p>
+
+                {/* Place */}
                 <p>
                   Place: <strong>{formData.resident || "__________"}</strong>
                 </p>
               </div>
-              <div className="text-center mb-4">
-                <p className="text-lg font-bold underline">Debit Note</p>
+              <hr className="border-t-2 border-black mt-2" />
+              <div className="text-center mt-20">
+                <p className="text-[36px] font-bold underline">Debit Note</p>
               </div>
-              <p className="mt-2">
-                I <strong>{formData.name || "__________"}</strong> S/O{" "}
-                <strong>{formData.sonOf || "__________"}</strong> Resident of{" "}
-                <strong>{formData.resident || "__________"}</strong> Aadhaar No.{" "}
-                <strong>{formData.aadhaarNo || "__________"}</strong> is working
-                for the {examData.examName || "____"} Examination held from{" "}
-                <strong>{formatDate(examData.startDate)}</strong> to{" "}
-                <strong>{formatDate(examData.endDate)}</strong>{" "}
-                {/* Updated exam name and dates */}
-              </p>
-              <p className="mt-2">
-                I am interested to join a Certification Program i.e., Basic
-                Certificate Course in Online Exam Management System for the
-                duration of 80 Hours.
-              </p>
-              <p className="mt-2">
-                To Join this certification program, I am authorizing StarParth
-                Technologies Pvt Ltd to Debit a Sum of Rs. <strong>2000</strong>{" "}
-                from the total payout of {examData.examName || "____"} prior and
-                after deducting this amount rest of amount will pay me through
-                Bank/ Cash. {/* Updated exam name */}
-              </p>
-              <div className="flex justify-between mt-4">
-                <p>
-                  Signature:{" "}
-                  {formData.signature ? (
-                    <img
-                      src={formData.signature}
-                      alt="Signature"
-                      className="w-32 h-12 object-contain"
-                    />
-                  ) : (
-                    "____________________"
-                  )}
+              <div className="mt-10">
+                <p className="mt-2">
+                  I <strong>{formData.name || "__________"}</strong> S/O{" "}
+                  <strong>{formData.sonOf || "__________"}</strong> Resident of{" "}
+                  <strong>{formData.resident || "__________"}</strong> Aadhaar
+                  No. <strong>{formData.aadhaarNo || "__________"}</strong> is
+                  working for the{" "}
+                  <strong className="underline">
+                    {examData.examName || "____"}
+                  </strong>{" "}
+                  Examination held from{" "}
+                  <strong className="underline">
+                    {formatDate(examData.startDate)}
+                  </strong>{" "}
+                  to{" "}
+                  <strong className="underline">
+                    {formatDate(examData.endDate)}
+                  </strong>{" "}
+                  {/* Updated exam name and dates */}
                 </p>
+                <p className="mt-2">
+                  I am interested to join a Certification Program i.e., Basic
+                  Certificate Course in Online Exam Management System for the
+                  duration of 80 Hours.
+                </p>
+                <p className="mt-2">
+                  To Join this certification program, I am authorizing StarParth
+                  Technologies Pvt Ltd to Debit a Sum of Rs.{" "}
+                  <strong>___</strong> from the total payout of{" "}
+                  <strong className="underline">
+                    {examData.examName || "____"}
+                  </strong>{" "}
+                  prior and after deducting this amount rest of amount will pay
+                  me through Bank/ Cash. {/* Updated exam name */}
+                </p>
+              </div>
+              <div className="flex flex-wrap justify-between items-center gap-4 mt-5">
+                {/* Signature image aur text ek line mein */}
+                <div className="flex items-center gap-2">
+                  <p>Signature:</p>
+                  {formData.signature ? (
+                    <div className="w-24 h-12">
+                      <img
+                        src={formData.signature}
+                        alt="Signature"
+                        className="object-contain"
+                      />
+                    </div>
+                  ) : (
+                    <span>____________________</span>
+                  )}
+                </div>
+
+                {/* Date */}
                 <p>
                   Date: <strong>{formData.currentDate || "__________"}</strong>
                 </p>
+
+                {/* Place */}
                 <p>
                   Place: <strong>{formData.resident || "__________"}</strong>
                 </p>
               </div>
+              <hr className="border-t-2 border-black mt-2" />
             </div>
           </div>
 
           {/* Humble Undertaking Section (Netparam) */}
           <div className="preview-section">
-            <div className="flex justify-between mb-4 w-full">
-              <img
-                src="/netparam-logo.png"
-                alt="Netparam Logo"
-                width={200}
-                height={200}
-                className="object-contain"
-                crossOrigin="anonymous"
-              />
-              <img
-                src="/netparam-logo-2.png"
-                alt="Netparam Secondary Logo"
-                width={200}
-                height={200}
-                className="object-contain"
-                crossOrigin="anonymous"
-              />
-            </div>
             <div className="text-center mb-4">
-              <p className="text-xl font-bold">NETPARAM TECHNOLOGIES PVT LTD</p>
-              <p className="text-sm">
-                <strong>{examData.examName || "__________"}</strong>{" "}
-                <strong>{formatDate(examData.startDate)}</strong> to{" "}
-                <strong>{formatDate(examData.endDate)}</strong>{" "}
-                {/* Updated exam name and dates */}
-              </p>
-              <p className="text-lg font-bold underline">Undertaking</p>
+              <p className="text-[36px] font-bold underline">Undertaking</p>
             </div>
-            <div className="text-sm">
+            <div className="text-[16px] mt-15 ">
               <p>
                 I <strong>{formData.name || "__________"}</strong> S/O{" "}
                 <strong>{formData.sonOf || "__________"}</strong> Resident of{" "}
                 <strong>{formData.resident || "__________"}</strong> Aadhaar No.{" "}
                 <strong>{formData.aadhaarNo || "__________"}</strong> is working
-                for the <strong>{examData.examName || "__________"}</strong>{" "}
+                for the{" "}
+                <strong className="underline">
+                  {examData.examName || "__________"}
+                </strong>{" "}
                 Examination held from{" "}
-                <strong>{formatDate(examData.startDate)}</strong> to{" "}
-                <strong>{formatDate(examData.endDate)}</strong>{" "}
+                <strong className="underline">
+                  {formatDate(examData.startDate)}
+                </strong>{" "}
+                to{" "}
+                <strong className="underline">
+                  {formatDate(examData.endDate)}
+                </strong>{" "}
                 {/* Updated exam name and dates */}
               </p>
-              <p className="mt-2">
-                I will be there at from{" "}
-                <strong>{examData.examName || "__________"}</strong>{" "}
-                <strong>{formatDate(examData.startDate)}</strong> to{" "}
-                <strong>{formatDate(examData.endDate)}</strong> and this is
-                final confirmation, and I will not refuse in any condition.{" "}
-                {/* Updated dates */}
+              <p className="pt-2">
+                I will be there at from
+                <strong className="underline">
+                  {formatDate(examData.startDate)}
+                </strong>{" "}
+                to{" "}
+                <strong className="underline">
+                  {formatDate(examData.endDate)}
+                </strong>{" "}
+                and this is final confirmation, and I will not refuse in any
+                condition. {/* Updated dates */}
               </p>
               <p className="font-bold mt-4">Penalty Clause:</p>
-              <ol className="list-decimal list-inside mb-4 pl-4">
+              <ol className="list-decimal list-inside mb-4 pl-4 my-5">
                 <li>
                   I hereby take a responsibility of all the hardware items
                   provided to me for conduction of smooth examination will
@@ -902,7 +1228,7 @@ export default function PreviewPage() {
                 </li>
                 <li>
                   All the documents and information whatever I had submitted to
-                  Netparam Technologies Pvt Ltd are correct and genuine. If any
+                  StarParth Technologies Pvt Ltd are correct and genuine. If any
                   of the document/information found guilty, I would be wholly
                   responsible for the same and company will fully authorize to
                   take a legal action and no pay-out will be given to me as a
@@ -912,7 +1238,7 @@ export default function PreviewPage() {
                   If I will backout after this confirmation due to any of the
                   reason, I should be penalized for the same and debarred to
                   function as a Chief Invigilator in all future Examination of
-                  Netparam Technologies Pvt Ltd or their client.
+                  StarParth Technologies Pvt Ltd or their client.
                 </li>
               </ol>
               <p>
@@ -929,72 +1255,87 @@ export default function PreviewPage() {
                   Mobile No: <strong>{formData.phone || "__________"}</strong>
                 </p>
               </div>
+              <hr className="border-t-2 border-black mt-2" />
               <div className="flex justify-between mt-2">
-                {/* <div className="w-20 h-20 border-2 border-black flex items-center justify-center">
-                  <p className="text-xs text-center">Revenue Stamp</p>
-                </div> */}
                 <p className="text-center">
                   {formData.signature ? (
-                    <img
-                      src={formData.signature}
-                      alt="Signature"
-                      className="w-32 h-12 object-contain"
-                    />
+                    <div className="w-24 h-auto  mt-2">
+                      <img
+                        src={formData.signature}
+                        alt="Signature"
+                        className=" object-contain"
+                      />
+                    </div>
                   ) : (
                     "____________________"
                   )}
                   Signature:
                 </p>
-                <div className="w-20 h-20 border-2 border-black flex items-center justify-center">
-                  {formData.thumbprint ? (
-                    <img
-                      src={formData.thumbprint}
-                      alt="Thumbprint"
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <p className="text-xs text-center">Thumb</p>
-                  )}
+                <div className="w-20 h-20  flex items-center justify-center">
+                  <p className=" text-center">
+                    {formData.thumbprint ? (
+                      <div className="w-24 h-auto  mt-2">
+                        <img
+                          src={formData.thumbprint}
+                          alt="Thumbprint"
+                          className="object-contain"
+                        />
+                      </div>
+                    ) : (
+                      "____________________"
+                    )}
+                    Thumb:
+                  </p>
                 </div>
               </div>
             </div>
           </div>
-
           {/* Humble Payout Section (Netparam) */}
-          <div className="preview-section">
-            <div className="text-center mb-4">
-              <p className="text-lg font-bold underline">Payout</p>
+          <div className="preview-section ">
+            <div className="text-center ">
+              <p className="text-[36px] font-bold underline">Payout</p>
             </div>
-            <div className="text-sm">
+            <div className="text-[16px]">
               <p>
                 I <strong>{formData.name || "__________"}</strong> S/O{" "}
                 <strong>{formData.sonOf || "__________"}</strong> Resident of{" "}
                 <strong>{formData.resident || "__________"}</strong> Aadhaar No.{" "}
                 <strong>{formData.aadhaarNo || "__________"}</strong> is working
-                for the <strong>{examData.examName || "__________"}</strong>{" "}
-                Examination held from{" "}
-                <strong>{examData.examName || "__________"}</strong>{" "}
-                <strong>{formatDate(examData.startDate)}</strong> to{" "}
-                <strong>{formatDate(examData.endDate)}</strong>{" "}
+                for the{" "}
+                <strong className="underline">
+                  {examData.examName || "__________"}
+                </strong>{" "}
+                Examination held from{"  "}
+                <strong className="underline">
+                  {formatDate(examData.startDate)}
+                </strong>{" "}
+                to{" "}
+                <strong className="underline">
+                  {formatDate(examData.endDate)}
+                </strong>{" "}
                 {/* Updated exam name and dates */}
               </p>
               <p className="mt-2">
                 I will be there at from{" "}
-                <strong>{examData.examName || "__________"}</strong>{" "}
-                <strong>{formatDate(examData.startDate)}</strong> to{" "}
-                <strong>{formatDate(examData.endDate)}</strong> and this is
-                final confirmation, and I will not refuse in any condition.{" "}
-                {/* Updated dates */}
+                <strong className="underline">
+                  {formatDate(examData.startDate)}
+                </strong>{" "}
+                to{" "}
+                <strong className="underline">
+                  {formatDate(examData.endDate)}
+                </strong>{" "}
+                and this is final confirmation, and I will not refuse in any
+                condition. {/* Updated dates */}
               </p>
               <p className="mt-2">
                 I will be agreeing to work as a Chief Invigilator on behalf of
-                Netparam Technologies Pvt Ltd on the payout of Rs.{" "}
-                <strong>__/Day</strong> as a remuneration for the No. of days
+                StarParth Technologies Pvt Ltd on the payout of Rs.{" "}
+                <strong>___/Day</strong> as a remuneration for the No. of days
                 how I should be deployed on the centre according to allocation
                 on that particular centre.
               </p>
               <p className="font-bold mt-4">My Bank Details are as under:</p>
-              <div className="pl-4 mb-4">
+              <div className=" mb-4">
                 <p>
                   Account Holder Name:{" "}
                   <strong>{formData.accountHolderName || "__________"}</strong>
@@ -1019,76 +1360,104 @@ export default function PreviewPage() {
               </p>
               <p className="mt-2">
                 Note: - Payment will be given for the above duty and attendance
-                whatever applicable from Netparam Technologies Pvt Ltd in your
+                whatever applicable from StarParth Technologies Pvt Ltd in your
                 above-mentioned account through IMPS/NEFT or through CASH.
               </p>
-              <div className="flex justify-between mt-4">
-                <p>
-                  Signature:{" "}
+              <div className="flex flex-wrap justify-between items-center gap-4 mt-5">
+                {/* Signature image aur text ek line mein */}
+                <div className="flex items-center gap-2">
+                  <p>Signature:</p>
                   {formData.signature ? (
-                    <img
-                      src={formData.signature}
-                      alt="Signature"
-                      className="w-32 h-12 object-contain"
-                    />
+                    <div className="w-24 h-12">
+                      <img
+                        src={formData.signature}
+                        alt="Signature"
+                        className="object-contain "
+                      />
+                    </div>
                   ) : (
-                    "____________________"
+                    <span>____________________</span>
                   )}
-                </p>
+                </div>
+
+                {/* Date */}
                 <p>
                   Date: <strong>{formData.currentDate || "__________"}</strong>
                 </p>
+
+                {/* Place */}
                 <p>
                   Place: <strong>{formData.resident || "__________"}</strong>
                 </p>
               </div>
-              <div className="text-center mb-4">
-                <p className="text-lg font-bold underline">Debit Note</p>
+              <hr className="border-t-2 border-black mt-2" />
+              <div className="text-center mt-20">
+                <p className="text-[36px] font-bold underline">Debit Note</p>
               </div>
-              <p className="mt-2">
-                I <strong>{formData.name || "__________"}</strong> S/O{" "}
-                <strong>{formData.sonOf || "__________"}</strong> Resident of{" "}
-                <strong>{formData.resident || "__________"}</strong> Aadhaar No.{" "}
-                <strong>{formData.aadhaarNo || "__________"}</strong> is working
-                for the <strong>{examData.examName || "__________"}</strong>{" "}
-                Examination held from{" "}
-                <strong>{formatDate(examData.startDate)}</strong> to{" "}
-                <strong>{formatDate(examData.endDate)}</strong>
-                {/* Updated exam name and dates */}
-              </p>
-              <p className="mt-2">
-                I am interested to join a Certification Program i.e., Basic
-                Certificate Course in Online Exam Management System for the
-                duration of 80 Hours.
-              </p>
-              <p className="mt-2">
-                To Join this certification program, I am authorizing Netparam
-                Technologies Pvt Ltd to Debit a Sum of Rs. <strong>2000</strong>{" "}
-                from the total payout of{" "}
-                <strong>{examData.examName || "__________"}</strong> prior and
-                after deducting this amount rest of amount will pay me through
-                Bank/ Cash. {/* Updated exam name */}
-              </p>
-              <div className="flex justify-between mt-4">
-                <p>
-                  Signature:{" "}
-                  {formData.signature ? (
-                    <img
-                      src={formData.signature}
-                      alt="Signature"
-                      className="w-32 h-12 object-contain"
-                    />
-                  ) : (
-                    "____________________"
-                  )}
+              <div className="mt-10">
+                <p className="mt-2">
+                  I <strong>{formData.name || "__________"}</strong> S/O{" "}
+                  <strong>{formData.sonOf || "__________"}</strong> Resident of{" "}
+                  <strong>{formData.resident || "__________"}</strong> Aadhaar
+                  No. <strong>{formData.aadhaarNo || "__________"}</strong> is
+                  working for the{" "}
+                  <strong className="underline">
+                    {examData.examName || "____"}
+                  </strong>{" "}
+                  Examination held from{" "}
+                  <strong className="underline">
+                    {formatDate(examData.startDate)}
+                  </strong>{" "}
+                  to{" "}
+                  <strong className="underline">
+                    {formatDate(examData.endDate)}
+                  </strong>{" "}
+                  {/* Updated exam name and dates */}
                 </p>
+                <p className="mt-2">
+                  I am interested to join a Certification Program i.e., Basic
+                  Certificate Course in Online Exam Management System for the
+                  duration of 80 Hours.
+                </p>
+                <p className="mt-2">
+                  To Join this certification program, I am authorizing StarParth
+                  Technologies Pvt Ltd to Debit a Sum of Rs.{" "}
+                  <strong>___</strong> from the total payout of{" "}
+                  <strong className="underline">
+                    {examData.examName || "____"}
+                  </strong>{" "}
+                  prior and after deducting this amount rest of amount will pay
+                  me through Bank/ Cash. {/* Updated exam name */}
+                </p>
+              </div>
+              <div className="flex flex-wrap justify-between items-center gap-4 mt-5">
+                {/* Signature image aur text ek line mein */}
+                <div className="flex items-center gap-2">
+                  <p>Signature:</p>
+                  {formData.signature ? (
+                    <div className="w-24 h-12">
+                      <img
+                        src={formData.signature}
+                        alt="Signature"
+                        className="object-contain"
+                      />
+                    </div>
+                  ) : (
+                    <span>____________________</span>
+                  )}
+                </div>
+
+                {/* Date */}
                 <p>
                   Date: <strong>{formData.currentDate || "__________"}</strong>
                 </p>
+
+                {/* Place */}
                 <p>
                   Place: <strong>{formData.resident || "__________"}</strong>
                 </p>
               </div>
+              <hr className="border-t-2 border-black mt-2" />
             </div>
           </div>
 
@@ -1124,21 +1493,31 @@ export default function PreviewPage() {
                 I, <strong>{formData.name || "__________"}</strong> S/O{" "}
                 <strong>{formData.sonOf || "__________"}</strong> hereby declare
                 that I am not appearing in the{" "}
-                <strong>{examData.examName || "__________"}</strong>{" "}
+                <strong className="underline">
+                  {examData.examName || "__________"}
+                </strong>{" "}
                 Examination,{" "}
-                <strong>
+                <strong className="underline">
                   {" "}
                   {examData.examCount
                     ? examData.examCount.toString().padStart(2, "0")
                     : "___"}
                 </strong>{" "}
-                <strong>{examData.heldDate || "__________"}</strong>, held from{" "}
-                <strong>{formatDate(examData.startDate)}</strong> to{" "}
-                <strong>{formatDate(examData.endDate)}</strong> as a candidate
-                either at the exam centre or have been deputed at any other
-                centre which is involved in the conduct of the exam. If I am
-                absent or leave the examination Centre at any time, in any
-                scenario on the above mentioned dates, or found doing any
+                <strong className="underline">
+                  {examData.heldDate || "__________"}
+                </strong>
+                , held from{" "}
+                <strong className="underline">
+                  {formatDate(examData.startDate)}
+                </strong>{" "}
+                to{" "}
+                <strong className="underline">
+                  {formatDate(examData.endDate)}
+                </strong>{" "}
+                as a candidate either at the exam centre or have been deputed at
+                any other centre which is involved in the conduct of the exam.
+                If I am absent or leave the examination Centre at any time, in
+                any scenario on the above mentioned dates, or found doing any
                 Suspicious Activity / Malpractice / Unethical Behavior /
                 Professional Misconduct, then NetParam Technologies Pvt Ltd /
                 NETCOM/C-DAC/{examData.examName || "__________"} has full
@@ -1207,22 +1586,23 @@ export default function PreviewPage() {
                     <strong>{formData.currentDate || "__________"}</strong>
                   </p>
                   <p>
-                    Signature:{" "}
+                    Signature:
                     {formData.signature ? (
-                      <img
-                        src={formData.signature}
-                        alt="Signature"
-                        className="w-32 h-12 object-contain"
-                      />
+                      <div className="w-24 h-auto border-2 border-black mt-2">
+                        <img
+                          src={formData.signature}
+                          alt="Signature"
+                          className=" object-contain"
+                        />
+                      </div>
                     ) : (
                       "____________________"
                     )}
                   </p>
                 </div>
                 <div className="flex flex-col items-center">
-                  <p className="mb-2">Passport Size Photo</p>
                   {formData.photo ? (
-                    <div className="w-24 h-32 border-2 border-black mb-4">
+                    <div className="w-[150px] h-[150px] border-2 border-black mb-4">
                       <img
                         src={formData.photo}
                         alt="Photo"
@@ -1234,7 +1614,7 @@ export default function PreviewPage() {
                   )}
                   <p>Thumb Impression</p>
                   {formData.thumbprint ? (
-                    <div className="w-24 h-16 border-2 border-black mt-2">
+                    <div className="w-36 h-16 border-2 border-black mt-2">
                       <img
                         src={formData.thumbprint}
                         alt="Thumbprint"
@@ -1335,11 +1715,10 @@ export default function PreviewPage() {
           font-family: "Times New Roman", serif;
           font-size: 12pt;
           line-height: 1.4;
-          padding: 15mm;
+          padding: 8mm;
           width: 100%;
           max-width: 190mm;
           margin: 0 auto;
-          border: 1px solid #000;
           page-break-inside: avoid;
           background-color: #ffffff !important;
           box-sizing: border-box;
@@ -1408,8 +1787,8 @@ export default function PreviewPage() {
         }
         @media print {
           .print-container .preview-section {
-            border: 1px solid #000;
-            padding: 15mm;
+            // border: 1px solid #000;
+            //padding: 8mm;
             page-break-inside: avoid;
             page-break-before: auto;
             page-break-after: auto;

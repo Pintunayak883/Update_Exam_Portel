@@ -146,7 +146,6 @@
 
 /* styles/global.css */
 .preview-section {
-  border: 1px solid #000;
   padding: 20px;
   font-family: "Times New Roman", serif;
   min-height: 500px; /* Fixed height for consistency */
