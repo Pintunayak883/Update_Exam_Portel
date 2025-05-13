@@ -957,7 +957,7 @@ export default function PreviewPage() {
               <div className="flex justify-between mt-2">
                 <p className="text-center">
                   {formData.signature ? (
-                    <div className="w-24 h-auto  mt-2">
+                    <div className="w-15 h-auto  mt-2">
                       <img
                         src={formData.signature}
                         alt="Signature"
@@ -1061,7 +1061,7 @@ export default function PreviewPage() {
                       <img
                         src={formData.signature}
                         alt="Signature"
-                        className="object-contain "
+                        className="object-contain h-full "
                       />
                     </div>
                   ) : (
@@ -1350,11 +1350,11 @@ export default function PreviewPage() {
                 <div className="flex items-center gap-2">
                   <p>Signature:</p>
                   {formData.signature ? (
-                    <div className="w-24 h-12">
+                    <div className="w-15 h-auto">
                       <img
                         src={formData.signature}
                         alt="Signature"
-                        className="object-contain "
+                        className="object-contain h-full"
                       />
                     </div>
                   ) : (

@@ -1005,7 +1005,7 @@ function ViewPageContent() {
               <div className="flex justify-between mt-2">
                 <p className="text-center">
                   {formData.signature ? (
-                    <div className="w-24 h-auto  mt-2">
+                    <div className="w-15 h-auto  mt-2">
                       <img
                         src={formData.signature}
                         alt="Signature"
@@ -1119,7 +1119,7 @@ function ViewPageContent() {
                       <img
                         src={formData.signature}
                         alt="Signature"
-                        className="object-contain "
+                        className="object-contain h-full"
                       />
                     </div>
                   ) : (
@@ -1186,7 +1186,7 @@ function ViewPageContent() {
                       <img
                         src={formData.signature}
                         alt="Signature"
-                        className="object-contain"
+                        className="object-contain h-full"
                       />
                     </div>
                   ) : (
@@ -1308,7 +1308,7 @@ function ViewPageContent() {
               <div className="flex justify-between mt-2">
                 <p className="text-center">
                   {formData.signature ? (
-                    <div className="w-24 h-auto">
+                    <div className="w-15 h-auto">
                       <img
                         src={formData.signature}
                         alt="Signature"
@@ -1422,7 +1422,7 @@ function ViewPageContent() {
                       <img
                         src={formData.signature}
                         alt="Signature"
-                        className="object-contain "
+                        className="object-contain h-full "
                       />
                     </div>
                   ) : (
@@ -1489,7 +1489,7 @@ function ViewPageContent() {
                       <img
                         src={formData.signature}
                         alt="Signature"
-                        className="object-contain"
+                        className="object-contain h-full"
                       />
                     </div>
                   ) : (
