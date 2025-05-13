@@ -346,7 +346,7 @@ function ViewPageContent() {
               </p>
             </div>
             <p className="text-sm">
-              I, <strong>{formData.name || "__________"}</strong> S/O{" "}
+              I <strong>{formData.name || "__________"}</strong> S/O{" "}
               <strong>{formData.sonOf || "__________"}</strong> hereby declare
               that I am not appearing in the{" "}
               <strong className="underline">
@@ -438,13 +438,14 @@ function ViewPageContent() {
                 <p>
                   Date: <strong>{formData.currentDate || "__________"}</strong>
                 </p>
-                <p>Signature: </p>{" "}
+
                 {formData.signature ? (
-                  <div className="w-24 h-auto border-2 border-black mt-2">
+                  <div className="w-24 h-12">
+                    <p>Signature: </p>{" "}
                     <img
                       src={formData.signature}
                       alt="Signature"
-                      className="object-contain"
+                      className="object-contain h-full mt-2"
                     />
                   </div>
                 ) : (
@@ -453,27 +454,27 @@ function ViewPageContent() {
               </div>
               <div className="flex flex-col items-center">
                 {formData.photo ? (
-                  <div className="w-[150px] h-[150px] border-2 border-black mb-4">
+                  <div className="w-[150px] h-[150px]  mb-4">
                     <img
                       src={formData.photo}
                       alt="Photo"
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-contain"
                     />
                   </div>
                 ) : (
-                  <div className="w-24 h-32 border-2 border-black mb-4"></div>
+                  <div className="w-24 h-32  mb-4"></div>
                 )}
                 <p>Thumb Impression</p>
                 {formData.thumbprint ? (
-                  <div className="w-36 h-16 border-2 border-black mt-2">
+                  <div className="w-36 h-16  mt-2">
                     <img
                       src={formData.thumbprint}
                       alt="Thumbprint"
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-contain"
                     />
                   </div>
                 ) : (
-                  <div className="w-24 h-16 border-2 border-black "></div>
+                  <div className="w-24 h-16  "></div>
                 )}
               </div>
             </div>
@@ -681,14 +682,14 @@ function ViewPageContent() {
                 {/* Signature, Date, Place ek hi line mein, Signature image ke saath */}
                 <div className="flex flex-wrap justify-between items-center gap-4">
                   {/* Signature image aur text ek line mein */}
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center justify-center gap-2 mt-2">
                     <p>Signature:</p>
                     {formData.signature ? (
                       <div className="w-24 h-12">
                         <img
                           src={formData.signature}
                           alt="Signature"
-                          className="object-contain"
+                          className="object-contain h-full"
                         />
                       </div>
                     ) : (
@@ -1019,11 +1020,11 @@ function ViewPageContent() {
                 <div className="w-20 h-20  flex items-center justify-center">
                   <p className=" text-center">
                     {formData.thumbprint ? (
-                      <div className="w-24 h-auto  mt-2">
+                      <div className="w-36 h-16  mt-2">
                         <img
-                          src={formData.thumbprint}
+                          src={formData?.thumbprint || undefined}
                           alt="Thumbprint"
-                          className="object-contain"
+                          className="w-full h-full object-contain"
                         />
                       </div>
                     ) : (
@@ -1114,7 +1115,7 @@ function ViewPageContent() {
                 <div className="flex items-center gap-2">
                   <p>Signature:</p>
                   {formData.signature ? (
-                    <div className="w-24 h-12">
+                    <div className="w-15 h-12">
                       <img
                         src={formData.signature}
                         alt="Signature"
@@ -1181,7 +1182,7 @@ function ViewPageContent() {
                 <div className="flex items-center gap-2">
                   <p>Signature:</p>
                   {formData.signature ? (
-                    <div className="w-24 h-12">
+                    <div className="w-15 h-12">
                       <img
                         src={formData.signature}
                         alt="Signature"
@@ -1206,6 +1207,7 @@ function ViewPageContent() {
               <hr className="border-t-2 border-black mt-2" />
             </div>
           </div>
+
           {/* Humble Undertaking Section (Netparam) */}
           <div className="preview-section">
             <div className="text-center mb-4">
@@ -1306,7 +1308,7 @@ function ViewPageContent() {
               <div className="flex justify-between mt-2">
                 <p className="text-center">
                   {formData.signature ? (
-                    <div className="w-24 h-auto  mt-2">
+                    <div className="w-24 h-auto">
                       <img
                         src={formData.signature}
                         alt="Signature"
@@ -1321,11 +1323,11 @@ function ViewPageContent() {
                 <div className="w-20 h-20  flex items-center justify-center">
                   <p className=" text-center">
                     {formData.thumbprint ? (
-                      <div className="w-24 h-auto  mt-2">
+                      <div className="w-36 h-16  mt-2">
                         <img
-                          src={formData.thumbprint}
+                          src={formData?.thumbprint || undefined}
                           alt="Thumbprint"
-                          className="object-contain"
+                          className="w-full h-full object-contain"
                         />
                       </div>
                     ) : (
@@ -1416,7 +1418,7 @@ function ViewPageContent() {
                 <div className="flex items-center gap-2">
                   <p>Signature:</p>
                   {formData.signature ? (
-                    <div className="w-24 h-12">
+                    <div className="w-15 h-12">
                       <img
                         src={formData.signature}
                         alt="Signature"
@@ -1483,7 +1485,7 @@ function ViewPageContent() {
                 <div className="flex items-center gap-2">
                   <p>Signature:</p>
                   {formData.signature ? (
-                    <div className="w-24 h-12">
+                    <div className="w-15 h-12">
                       <img
                         src={formData.signature}
                         alt="Signature"
@@ -1538,7 +1540,7 @@ function ViewPageContent() {
             </div>
             <div className="text-sm">
               <p className="text-sm">
-                I, <strong>{formData.name || "__________"}</strong> S/O{" "}
+                I <strong>{formData.name || "__________"}</strong> S/O{" "}
                 <strong>{formData.sonOf || "__________"}</strong> hereby declare
                 that I am not appearing in the{" "}
                 <strong className="underline">
@@ -1637,11 +1639,11 @@ function ViewPageContent() {
                   <p>
                     Signature:
                     {formData.signature ? (
-                      <div className="w-24 h-auto border-2 border-black mt-2">
+                      <div className="w-15 h-10  mt-2">
                         <img
                           src={formData.signature}
                           alt="Signature"
-                          className=" object-contain"
+                          className="object-contain"
                         />
                       </div>
                     ) : (
@@ -1651,19 +1653,19 @@ function ViewPageContent() {
                 </div>
                 <div className="flex flex-col items-center">
                   {formData.photo ? (
-                    <div className="w-[150px] h-[150px] border-2 border-black mb-4">
+                    <div className="w-[150px] h-[150px]  mb-4">
                       <img
                         src={formData.photo}
                         alt="Photo"
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-contain"
                       />
                     </div>
                   ) : (
-                    <div className="w-24 h-32 border-2 border-black mb-4"></div>
+                    <div className="w-24 h-32  mb-4"></div>
                   )}
                   <p>Thumb Impression</p>
                   {formData.thumbprint ? (
-                    <div className="w-36 h-16 border-2 border-black mt-2">
+                    <div className="w-36 h-16  mt-2">
                       <img
                         src={formData.thumbprint}
                         alt="Thumbprint"
@@ -1671,7 +1673,7 @@ function ViewPageContent() {
                       />
                     </div>
                   ) : (
-                    <div className="w-24 h-16 border-2 border-black mt-2"></div>
+                    <div className="w-24 h-16  mt-2"></div>
                   )}
                 </div>
               </div>

@@ -814,7 +814,7 @@ export default function ApplyPage() {
                       <img
                         src={photoPreviewUrl}
                         alt="Photo"
-                        className="w-40 h-40 object-cover rounded shadow"
+                        className="w-40 h-auto object-cover rounded shadow"
                       />
                     </div>
                   )}
@@ -854,7 +854,7 @@ export default function ApplyPage() {
                       <img
                         src={signaturePreviewUrl}
                         alt="Signature"
-                        className="w-40 h-20 object-cover rounded shadow"
+                        className="w-40 h-auto object-cover rounded shadow"
                       />
                     </div>
                   )}
@@ -894,7 +894,7 @@ export default function ApplyPage() {
                       <img
                         src={thumbprintPreviewUrl}
                         alt="Thumbprint"
-                        className="w-40 h-20 object-cover rounded shadow"
+                        className="w-40 h-auto object-cover rounded shadow"
                       />
                     </div>
                   )}
